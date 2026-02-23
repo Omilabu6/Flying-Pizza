@@ -24,12 +24,20 @@ function App() {
 
       console.log("You said:", transcript);
 
-      if (transcript.includes("stop")) {
-        setIsFlying(false);
+      if (
+        transcript.includes("continue") ||
+        transcript.includes("start") ||
+        transcript.includes("go")
+      ) {
+        setIsFlying(true);
       }
 
-      if (transcript.includes("continue")) {
-        setIsFlying(true);
+
+      if (
+        transcript.includes("stop") ||
+        transcript.includes("pause")
+      ) {
+        setIsFlying(false);
       }
     };
 
