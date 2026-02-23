@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(to top, #87ceeb, #b6e3f1);
+}
+
+.scene {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+.clouds {
+  position: absolute;
+  width: 200%;
+  height: 20vh;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  z-index: 0;
+}
+
+.clouds-back {
+  top: 5vh;
+  background-image: url("/cloud.png");
+  opacity: 0.6;
+}
+
+.clouds-front {
+  top: 15vh;
+  background-image: url("/cloud.png");
+  transform: scale(1.05);
+}
+
+.clouds-move-slow {
+  animation: moveClouds 80s linear infinite;
+}
+
+.clouds-move-fast {
+  animation: moveClouds 60s linear infinite;
+}
+
+
+.city {
+  position: absolute;
+  bottom: 10vh; 
+  width: 200%;
+  height: 35vh; 
+  background: url("/city.png") repeat-x bottom;
+  background-size: auto 100%;
+  z-index: 1;
+}
+
+.city-move {
+  animation: moveCity 40s linear infinite;
+}
+
+
+.road {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 10vh;
+  background: url("/road.png") repeat-x bottom;
+  background-size: auto 100%;
+  z-index: 2;
+}
+
+.road-move {
+  animation: moveRoad 10s linear infinite;
+}
+
+
+.pizza {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12vw;
+  max-width: 160px; 
+  min-width: 80px;  
+  z-index: 999;
+  transition: bottom 2s ease-in-out;
+}
+
+.pizza-float {
+  animation: floatPizza 3s ease-in-out infinite;
+}
+
+
+
+@keyframes floatPizza {
+  0%   { transform: translateX(-50%) translateY(0px) rotate(-2deg); }
+  25%  { transform: translateX(-48%) translateY(-5px) rotate(1deg); }
+  50%  { transform: translateX(-50%) translateY(-10px) rotate(2deg); }
+  75%  { transform: translateX(-52%) translateY(-5px) rotate(-1deg); }
+  100% { transform: translateX(-50%) translateY(0px) rotate(-2deg); }
+}
+
+@keyframes moveRoad {
+  from { background-position-x: 0; }
+  to   { background-position-x: -1000px; }
+}
+
+@keyframes moveCity {
+  from { background-position-x: 0; }
+  to   { background-position-x: -1000px; }
+}
+
+@keyframes moveClouds {
+  from { background-position-x: 0; }
+  to   { background-position-x: -1000px; }
+}
+
+
+
+@media (max-width: 768px) {
+  .city {
+    height: 30vh;
+  }
+
+  .road {
+    height: 12vh;
+  }
+
+  .pizza {
+    width: 18vw;
+  }
+}
