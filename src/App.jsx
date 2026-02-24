@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import pizza from "./assets/pizza.png";
 import "./App.css";
 
 function App() {
   const [isFlying, setIsFlying] = useState(true);
+
+  // Keep a reference to the recognition instance
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     const SpeechRecognition =
@@ -14,7 +17,10 @@ function App() {
       return;
     }
 
+    // Create recognition only once
     const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+
     recognition.continuous = true;
     recognition.lang = "en-US";
 
@@ -24,25 +30,26 @@ function App() {
 
       console.log("You said:", transcript);
 
-      if (
-        transcript.includes("continue") ||
-        transcript.includes("start") ||
-        transcript.includes("go")
-      ) {
+      // Start/continue flying
+      if (transcript.includes("continue") || transcript.includes("start") || transcript.includes("go")) {
         setIsFlying(true);
       }
 
-
-      if (
-        transcript.includes("stop") ||
-        transcript.includes("pause")
-      ) {
+      // Stop flying
+      if (transcript.includes("stop") || transcript.includes("pause")) {
         setIsFlying(false);
       }
     };
 
+    // Auto-restart recognition if it ends
+    recognition.onend = () => {
+      console.log("Speech recognition ended, restarting...");
+      recognition.start();
+    };
+
     recognition.start();
 
+    // Cleanup on unmount
     return () => recognition.stop();
   }, []);
 
